@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: goodwatch
+      POSTGRES_USER: goodwatch
+      POSTGRES_PASSWORD: goodwatch
+    volumes:
+      - goodwatch_db_data:/var/lib/postgresql/data
+
+volumes:
+  goodwatch_db_data:
+    driver: local

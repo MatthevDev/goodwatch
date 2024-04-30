@@ -1,0 +1,17 @@
+{
+    "name": "goodwatch",
+    "short_name": "Installable",
+    "theme_color": "#000000",
+    "background_color": "#000000",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "description": "A platform for sharing your movie tastes",
+    "icons": [
+      {
+        "src": "/images/icon-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+   }
