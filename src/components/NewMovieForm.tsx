@@ -1,6 +1,6 @@
 'use client'
 
-import { Plus } from "lucide-react"
+import { Loader2, Plus } from "lucide-react"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 
@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem} from "./ui/form"
 import { useToast } from "./ui/use-toast"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import MovieContext from "./context/MovieContext"
 
 const formSchema = z.object({
@@ -23,6 +23,7 @@ interface Props {
 const NewMovieForm = ({userId}: Props) => {
     const {toast} = useToast()
     const {movies, setMovies, setAnimateLast} = useContext(MovieContext)
+    const [isAddLoading, setIsAddLoading] = useState<boolean>(false)
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -42,6 +43,7 @@ const NewMovieForm = ({userId}: Props) => {
     }, [toast, form.formState.isSubmitting, form.formState.isValid])
 
     const onSubmit = async(values: z.infer<typeof formSchema>) => {
+        setIsAddLoading(true)
         const res = await fetch('/api/movie/add', {
             method: 'POST',
             headers: {
@@ -51,6 +53,8 @@ const NewMovieForm = ({userId}: Props) => {
                 userId: userId,
                 movieTitle: values.title
             }),
+        }).finally(async () => {
+            setIsAddLoading(false) 
         })
         if(res.ok) {
             const data = await res.json()
@@ -89,6 +93,7 @@ const NewMovieForm = ({userId}: Props) => {
                             <FormControl>
                                 <Input
                                 placeholder="Title"
+                                disabled={isAddLoading}
                                 {...field}
                                 />
                             </FormControl>
@@ -96,8 +101,12 @@ const NewMovieForm = ({userId}: Props) => {
                     )
                 }}
                 />
-                <Button type="submit" className="p-2">
-                    <Plus className="w-6 h-6" />
+                <Button type="submit" className="p-2" disabled={isAddLoading}>
+                    {isAddLoading ? (
+                        <Loader2 className="w-6 h-6 animate-spin" />
+                    ) : (
+                        <Plus className="w-6 h-6" />
+                    )}
                 </Button>
             </form>
             

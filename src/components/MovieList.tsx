@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils"
 import { useToast } from "./ui/use-toast"
 import StarRanking from "./movieBlock/StarRanking"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu"
+import { describe } from "node:test"
 
 interface Props {
     userId: string
@@ -17,6 +18,18 @@ interface Props {
 const MovieBlock = ({movie, id, setMovies, userId, toast}: {movie: Movie, id: string, setMovies: (value: Movie[]) => void, userId: string, toast: Function}) => {
     const deleteMovie = async () => {
         console.log("Deleting movie")
+
+        gsap.from(`#${movie.id}`, {
+            marginBottom: 0,
+            marginTop: 0,
+        })
+        gsap.to(`#${movie.id}`, {
+            opacity: 0,
+            marginBottom: -10,
+            marginTop: -10,
+            scaleY: 0,
+            duration: 0.5,
+        })
 
         const res = await fetch('/api/movie/delete', {
             method: 'POST',
@@ -34,19 +47,25 @@ const MovieBlock = ({movie, id, setMovies, userId, toast}: {movie: Movie, id: st
                 variant: "destructive",
                 duration: 2000,
             })
+            gsap.from(`#${movie.id}`, {
+                opacity: 0,
+                marginBottom: -10,
+                marginTop: -10,
+                scaleY: 0,
+                duration: 0.5,
+            })
+            gsap.to(`#${movie.id}`, {
+                marginBottom: 8,
+                marginTop: 8,
+                opacity: 1,
+                scaleY: 1,
+                duration: 0.5,
+            })
             return
         }
 
-        gsap.from(`#${movie.id}`, {
-            marginBottom: 0,
-            marginTop: 0,
-        })
         gsap.to(`#${movie.id}`, {
-            opacity: 0,
             height: 0,
-            marginBottom: -10,
-            marginTop: -10,
-            scaleY: 0,
             duration: 0.5,
         })
 
@@ -65,8 +84,12 @@ const MovieBlock = ({movie, id, setMovies, userId, toast}: {movie: Movie, id: st
     }
 
     const [ranking, setRanking] = useState<number>(movie.ranking)
+    const [isUpating, setIsUpdating] = useState<boolean>(false)
 
     const updateRanking = async (value: number) => {
+        const prev = movie.ranking
+        setRanking(value)
+        setIsUpdating(true)
         const res = await fetch('/api/movie/ranking', {
             method: 'POST',
             headers: {
@@ -77,8 +100,24 @@ const MovieBlock = ({movie, id, setMovies, userId, toast}: {movie: Movie, id: st
                 movieId: movie.id,
                 value: value
             }),
+        }).finally(async () => {
+            toast({
+                title: `Movie: ${movie.title}`,
+                description: "Ranking updated",
+                variant: "default",
+                duration: 1000
+            })
+            setIsUpdating(false)
         })
-        setRanking(value)
+        if(!res.ok) {
+            toast({
+                title: "Something went wrong...",
+                description: "Failed to update ranking",
+                variant: "destructive",
+                duration: 2000,
+            })
+            setRanking(prev)
+        }
     }
 
     const createdTime = new Date(movie.timeCreated)
@@ -89,7 +128,7 @@ const MovieBlock = ({movie, id, setMovies, userId, toast}: {movie: Movie, id: st
                 🍿 {movie.title}
             </h1>
             <div className="flex space-x-4 justify-center items-center">
-                <StarRanking value={ranking} setValue={updateRanking} />
+                <StarRanking value={ranking} setValue={updateRanking} isLoading={isUpating} />
                 <DropdownMenu>
                     <DropdownMenuTrigger>
                         <MoreVertical className="w-6 h-6 text-zinc-600 hover:text-zinc-800 transition-all" />
