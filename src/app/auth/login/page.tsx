@@ -53,7 +53,8 @@ function LoginForm() {
         <Form {...form}>
             <form
             onSubmit={form.handleSubmit(onSubmit)}>
-                <Card className="mx-auto max-w-sm">
+                <Card className="w-full md:w-auto md:mx-auto md:max-w-sm
+                md:border-2 md:shadow-sm border-0 shadow-none">
                 <CardHeader>
                     <CardTitle className="text-xl">Sign In</CardTitle>
                     <CardDescription>

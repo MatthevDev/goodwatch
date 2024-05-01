@@ -123,15 +123,15 @@ const MovieBlock = ({movie, id, setMovies, userId, toast}: {movie: Movie, id: st
     const createdTime = new Date(movie.timeCreated)
 
     return (
-        <div id={movie.id} className={cn("bg-zinc-100 border border-zinc-300 rounded-lg px-4 py-2 my-2 flex justify-between items-center", id)}>
-            <h1 className="text-xl font-medium">
+        <div id={movie.id} className={cn("bg-zinc-100 border border-zinc-300 rounded-lg px-2 md:px-4 py-2 my-1 md:my-2 flex justify-between items-center", id)}>
+            <h1 className="text-sm md:text-xl font-medium">
                 🍿 {movie.title}
             </h1>
-            <div className="flex space-x-4 justify-center items-center">
+            <div className="flex space-x-2 md:space-x-4 justify-center items-center">
                 <StarRanking value={ranking} setValue={updateRanking} isLoading={isUpating} />
                 <DropdownMenu>
                     <DropdownMenuTrigger>
-                        <MoreVertical className="w-6 h-6 text-zinc-600 hover:text-zinc-800 transition-all" />
+                        <MoreVertical className="w-4 h-4 md:w-6 md:h-6 text-zinc-600 hover:text-zinc-800 transition-all" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                         <DropdownMenuItem className="text-xs">

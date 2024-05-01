@@ -74,7 +74,7 @@ function LoginForm() {
         <Form {...form}>
             <form
             onSubmit={form.handleSubmit(onSubmit)}>
-                <Card className="mx-auto max-w-sm">
+                <Card className="border-0 shadow-none md:shadow-sm md:border-2 md:w-auto w-full md:mx-auto md:max-w-sm">
                 <CardHeader>
                     <CardTitle className="text-xl">Sign Up</CardTitle>
                     <CardDescription>

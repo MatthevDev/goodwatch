@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <div className="w-screen h-screen flex justify-center items-center">
-      <div className="px-24 py-12 bg-white border border-zinc-300 rounded-lg shadow-md">
+      <div className="px-8 py-6 md:px-24 md:py-12 bg-white border border-zinc-300 rounded-lg shadow-md">
         <h1 className="font-semibold text-3xl text-center mb-6">
           Welcome
         </h1>

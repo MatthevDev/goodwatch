@@ -23,8 +23,8 @@ const Page = () => {
     const [animateLast, setAnimateLast] = useState<boolean>(false)
 
     return(
-        <div className="w-screen h-screen flex justify-center items-center">
-            <div className="grid grid-cols-1 items-stretch grid-rows-[auto,1fr] space-y-4 w-2/5 h-[calc(100%-4rem)] min-w-96 px-12 py-6 border border-zinc-200 shadow-md rounded-lg">
+        <div className="w-screen fix-mobile flex justify-center items-stretch md:items-center">
+            <div className="fix-mobile grid grid-cols-1 items-stretch grid-rows-[auto,1fr,auto] space-y-4 w-full md:w-2/5 md:h-[calc(100%-4rem)] md:min-w-80 px-5 md:px-12 py-4 md:py-6 md:border md:border-zinc-200 md:shadow-md md:rounded-lg">
                 <div className="flex justify-between items-center">
                     <Link href="/">
                         <Button
@@ -33,7 +33,7 @@ const Page = () => {
                             <ArrowLeftCircle className="w-6 h-6" />
                         </Button> 
                     </Link>
-                    <h1 className="font-semibold text-3xl">
+                    <h1 className="font-semibold text-xl md:text-3xl">
                         Your Movies 🎬
                     </h1>
                 </div>
@@ -42,7 +42,7 @@ const Page = () => {
                         <Loader2 className="text-zinc-600 w-8 h-8 animate-spin" />
                     ) : (session.user as UserWithId).id ? (
                         <>
-                            <div className="w-full max-h-2/3 overflow-auto">
+                            <div className="w-full max-h-full h-full overflow-auto">
                                 <MovieList userId={(session.user as UserWithId).id} />
                             </div>
                             <div className="w-full">

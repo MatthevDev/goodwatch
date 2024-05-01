@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/options";
 import SessionProvider from "@/components/SessionProvider"
 import Script from "next/script";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <Script src='/register-sw.js' />
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+      </head>
       <body className={inter.className}>
         <SessionProvider session={session}>
           {children}

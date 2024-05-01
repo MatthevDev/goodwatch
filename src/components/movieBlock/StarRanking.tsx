@@ -16,7 +16,7 @@ const InteractiveStar = ({value, setValue,
     hoverValue, setHoverValue, position}: StarProps) => {
     return (
         <Star
-        className={cn("w-6 h-6", hoverValue != null && hoverValue > position || value > position ? "text-yellow-500" : "text-gray-500")}
+        className={cn("w-4 h-4 md:w-6 md:h-6", hoverValue != null && hoverValue > position || value > position ? "text-yellow-500" : "text-gray-500")}
         onMouseEnter={() => setHoverValue(position + 1)}
         onMouseLeave={() => setHoverValue(null)}
         onClick={() => {
@@ -41,7 +41,7 @@ const StarRanking = ({value, setValue, isLoading, disabled}: StarRankingProps) =
     const [hoverValue, setHoverValue] = useState<number | null>(value)
 
     return (
-        <div className={cn("flex space-x-2", disabled && "pointer-events-none text-gray-300", isLoading && "animate-pulse")}>
+        <div className={cn("flex space-x-1 md:space-x-2", disabled && "pointer-events-none text-gray-300", isLoading && "animate-pulse")}>
             <InteractiveStar
             value={value}
             setValue={setValue}
