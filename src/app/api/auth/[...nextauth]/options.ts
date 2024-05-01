@@ -1,5 +1,4 @@
 import CredentialsProvider from "next-auth/providers/credentials"
-import {v4 as uuid} from 'uuid'
 import { db } from "@/db"
 import {compare} from 'bcrypt'
 
@@ -46,5 +45,8 @@ export const authOptions = {
             }
             return token;
         },
+    },
+    pages: {
+        signIn: "/auth/login",
     }
 }

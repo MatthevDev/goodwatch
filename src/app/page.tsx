@@ -1,7 +1,7 @@
 'use client'
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 
@@ -30,7 +30,11 @@ export default function Home() {
                 </Button>
               </Link>
               <Button
-              onClick={() => {router.push("/api/auth/signout")}}>
+              onClick={() => {
+                signOut({
+                  callbackUrl: "/",
+                })
+              }}>
                 Sign Out
               </Button>
             </>
